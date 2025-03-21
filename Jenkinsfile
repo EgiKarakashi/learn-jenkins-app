@@ -14,10 +14,21 @@ pipeline {
                     ls -la
                     node --version
                     npm --version
-                    rm -rf node_modules
-                    npm ci
+                    
+                    # Clear npm cache and ensure correct permissions
+                    npm cache clean --force
+                    
+                    # Install dependencies with more verbose output
+                    npm install --verbose
+                    
+                    # Ensure react-scripts is installed properly
+                    npm list react-scripts || npm install react-scripts --save-dev
+                    
+                    # Run the build
                     npm run build
-                    ls -la
+                    
+                    # List build artifacts
+                    ls -la build/
                 '''
             }
         }
